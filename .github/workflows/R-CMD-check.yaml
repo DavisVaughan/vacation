@@ -40,6 +40,16 @@ jobs:
 
       - uses: r-lib/actions/setup-pandoc@master
 
+      - name: Setup V8 - Linux
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get install -y libv8-dev
+
+      - name: Setup V8 - Mac
+        if: runner.os == 'macOS'
+        run: |
+          brew install v8
+
       - name: Query dependencies
         run: |
           install.packages('remotes')
