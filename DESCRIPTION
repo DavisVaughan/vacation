@@ -6,13 +6,13 @@ Authors@R:
            family = "Vaughan",
            role = c("aut", "cre"),
            email = "davis@rstudio.com")
-Description: Provides additional holiday and calendar utilities extending the
-    recurrence rules tools provided by the 'almanac' package. While 'almanac'
-    provides the core tools for working with recurring events, it is a little
-    challenging to use it to construct a full business calendar. The goal of
-    'vacation' is to provide an extensible system for adding custom holidays
-    into a larger business calendar. 'vacation' comes with a number of common
-    holidays built-in.
+Description: Provides additional holiday and calendar utilities
+    extending the recurrence rules tools provided by the 'almanac'
+    package. While 'almanac' provides the core tools for working with
+    recurring events, it is a little challenging to use it to construct a
+    full business calendar. The goal of 'vacation' is to provide an
+    extensible system for adding custom holidays into a larger business
+    calendar. 'vacation' comes with a number of common holidays built-in.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
