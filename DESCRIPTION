@@ -25,7 +25,8 @@ Imports:
     vctrs (>= 0.2.99.9011),
     lubridate
 Suggests: 
-    testthat
+    testthat,
+    covr
 Remotes:
     DavisVaughan/almanac,
     r-lib/vctrs
