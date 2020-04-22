@@ -6,5 +6,7 @@
 ## usethis namespace: start
 #' @import vctrs
 #' @import rlang
+#' @import almanac
+#' @importFrom glue glue
 ## usethis namespace: end
 NULL
