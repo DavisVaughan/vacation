@@ -3,18 +3,21 @@ basic method
 ============
 
 > calendar()
-Error in check_since(since): could not find function "check_since"
+<calendar[1970-01-01 / 2040-01-01]>
 
 > calendar("USA")
-Error in check_since(since): could not find function "check_since"
+<calendar[USA / 1970-01-01 / 2040-01-01]>
 
 
 can add holidays
 ================
 
 > add_hldy(calendar(), hldy_christmas())
-Error in check_since(since): could not find function "check_since"
+<calendar[1970-01-01 / 2040-01-01]>
+- Christmas
 
 > add_hldy(add_hldy(calendar(), hldy_christmas()), hldy_martin_luther_king_jr_day())
-Error in check_since(since): could not find function "check_since"
+<calendar[1970-01-01 / 2040-01-01]>
+- Christmas
+- Martin Luther King Jr. Day
 
