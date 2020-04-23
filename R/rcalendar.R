@@ -23,24 +23,89 @@ rcalendar <- function(name = NULL,
 
 # ------------------------------------------------------------------------------
 
+#' Add an rholiday to an rcalendar
+#'
+#' @description
+#' `add_rholiday()` adds a new holiday to a calendar. To add a holiday, pass
+#' through the corresponding holiday _function_, without the parenthesis.
+#' `add_rholiday()` will take care of constructing the rholiday object with
+#' the correct arguments.
+#'
+#' Arguments passed on to the `rholiday_fn` (such as `since` and `adjust_on`)
+#' default to the corresponding arguments in the rcalendar, but can be
+#' overridden at the rholiday level by supplying them in `add_rholiday()`.
+#'
+#' @param x `[rcalendar]`
+#'
+#'   An rcalendar.
+#'
+#' @param rholiday_fn `[function]`
+#'
+#'   An rholiday _function_, such as `hldy_christmas`. The actual function
+#'   should be supplied, and `add_rholiday()` will take care of calling it
+#'   with the correct arguments.
+#'
+#' @param ... Not used.
+#'
+#' @param since `[NULL / Date(1)]`
+#'
+#'   If `NULL`, default to the `since` date of the rcalendar, `x`.
+#'
+#'   Otherwise, the lower bound on where to begin looking for the holiday.
+#'
+#' @param until `[NULL / Date(1)]`
+#'
+#'   If `NULL`, default to the `until` date of the rcalendar, `x`.
+#'
+#'   Otherwise, the upper bound on where to begin looking for the holiday.
+#'
+#' @param adjust_on `[NULL / rschedule]`
+#'
+#'   If `NULL`, default to the `adjust_on` of the rcalendar, `x`.
+#'
+#'   Otherwise, an rschedule that defines when an adjustment to the holiday
+#'   should be made. For example, set to an rschedule for "on weekends", and
+#'   supply an `adjustment` of `adj_nearest()` to roll the holiday to the
+#'   nearest weekday.
+#'
+#' @param adjustment `[NULL / function]`
+#'
+#'   If `NULL`, default to the `adjustment` of the rcalendar, `x`.
+#'
+#'   Otherwise, an adjustment function to apply to problematic dates. Typically
+#'   one of the pre-existing adjustment functions, like
+#'   [almanac::adj_nearest()].
+#'
+#' @return
+#' `x`, with a new rholiday.
+#'
 #' @export
-rbundle_restore.rcalendar <- function(x, to) {
-  new_rcalendar(
-    name = to$name,
-    since = to$since,
-    until = to$until,
-    adjust_on = to$adjust_on,
-    adjustment = to$adjustment,
-    rholidays = to$rholidays,
-
-    rschedules = x$rschedules,
-    rdates = x$rdates,
-    exdates = x$exdates
-  )
-}
-
-# ------------------------------------------------------------------------------
-
+#' @examples
+#' library(almanac)
+#'
+#' cal <- rcalendar() %>%
+#'   add_rholiday(hldy_christmas) %>%
+#'   add_rholiday(hldy_new_years_day)
+#'
+#' cal
+#'
+#' alma_in("1999-12-25", cal)
+#'
+#'
+#' on_weekends <- weekly() %>%
+#'   recur_on_weekends()
+#'
+#' # Construct a calendar that rolls weekend Christmas dates to
+#' # the nearest weekday
+#' cal2 <- rcalendar() %>%
+#'   add_rholiday(
+#'     hldy_christmas,
+#'     adjust_on = on_weekends,
+#'     adjustment = adj_nearest
+#'   ) %>%
+#'   add_rholiday(hldy_new_years_day)
+#'
+#' alma_search("2004-01-01", "2010-01-01", cal2)
 add_rholiday <- function(x,
                          rholiday_fn,
                          ...,
@@ -73,6 +138,24 @@ add_rholiday <- function(x,
     adjustment = x$adjustment,
     rholidays = rholidays,
     rschedules = rschedules,
+    rdates = x$rdates,
+    exdates = x$exdates
+  )
+}
+
+# ------------------------------------------------------------------------------
+
+#' @export
+rbundle_restore.rcalendar <- function(x, to) {
+  new_rcalendar(
+    name = to$name,
+    since = to$since,
+    until = to$until,
+    adjust_on = to$adjust_on,
+    adjustment = to$adjustment,
+    rholidays = to$rholidays,
+
+    rschedules = x$rschedules,
     rdates = x$rdates,
     exdates = x$exdates
   )
