@@ -1,3 +1,16 @@
+#' Christmas
+#'
+#' `hldy_martin_luther_king_jr_day()` is a holiday for Martin Luther King
+#' Jr. Day, the third Monday in January.
+#'
+#' @inheritParams new_rholiday
+#'
+#' @return
+#' A rholiday.
+#'
+#' @export
+#' @examples
+#' alma_search("1990-01-01", "1995-01-01", hldy_martin_luther_king_jr_day())
 hldy_martin_luther_king_jr_day <- function(since = "1900-01-01",
                                            until = "2100-01-01",
                                            adjust_on = NULL,
