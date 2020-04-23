@@ -37,7 +37,10 @@ print.rholiday <- function(x, ...) {
 #' @export
 format.rholiday <- function(x, ...) {
   name <- rholiday_name(x)
-  glue("<rholiday[{name}]>")
+  since <- x$since
+  until <- x$until
+
+  glue("<rholiday[{name} / {since} / {until}]>")
 }
 
 # ------------------------------------------------------------------------------
