@@ -1,6 +1,6 @@
 rcalendar <- function(name = NULL,
-                      since = "1970-01-01",
-                      until = "2040-01-01",
+                      since = "1900-01-01",
+                      until = "2100-01-01",
                       adjust_on = NULL,
                       adjustment = NULL) {
   since <- check_since(since)

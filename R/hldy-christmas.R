@@ -1,5 +1,5 @@
-hldy_christmas <- function(since = "1970-01-01",
-                           until = "2040-01-01",
+hldy_christmas <- function(since = "1900-01-01",
+                           until = "2100-01-01",
                            adjust_on = NULL,
                            adjustment = NULL) {
   new_rholiday(
