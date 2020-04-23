@@ -5,7 +5,12 @@ test_that("print method for calendar is informative", {
     calendar("USA")
 
     "# can add holidays"
-    add_hldy(calendar(), hldy_christmas())
-    add_hldy(add_hldy(calendar(), hldy_christmas()), hldy_martin_luther_king_jr_day())
+    add_rholiday(calendar(), hldy_christmas)
+    add_rholiday(add_rholiday(calendar(), hldy_christmas), hldy_martin_luther_king_jr_day)
+
+    "# can add rschedules / rdates / exdates"
+    add_rschedule(calendar(), weekly())
+    add_rdate(calendar(), "2019-01-01")
+    add_exdate(calendar(), "2019-01-01")
   })
 })

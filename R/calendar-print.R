@@ -23,11 +23,24 @@ format_calendar_header <- function(x) {
   until <- x$until
   name <- x$name
 
-  if (is.null(name)) {
-    glue("<calendar[{since} / {until}]>")
+  # The rschedules object contains user supplied ones and rholidays
+  n_rschedules <- length(x$rschedules) - length(x$rholidays)
+  n_rdates <- length(x$rdates)
+  n_exdates <- length(x$exdates)
+
+  if (is.null(x$name)) {
+    name <- ""
   } else {
-    glue("<calendar[{name} / {since} / {until}]>")
+    name <- glue("{x$name} / ")
   }
+
+  since <- glue("{since} / ")
+  until <- glue("{until} / ")
+  rschedules <- glue("{n_rschedules} rschedules / ")
+  rdates <- glue("{n_rdates} rdates / ")
+  exdates <- glue("{n_exdates} exdates")
+
+  glue("<calendar[{name}{since}{until}{rschedules}{rdates}{exdates}]>")
 }
 
 format_calendar_body <- function(x) {

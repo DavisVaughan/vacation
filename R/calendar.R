@@ -17,16 +17,26 @@ calendar <- function(name = NULL,
     since = since,
     until = until,
     adjust_on = adjust_on,
-    adjustment = adjustment,
-    rholidays = list()
+    adjustment = adjustment
   )
 }
 
 # ------------------------------------------------------------------------------
 
 #' @export
-rschedule_events.calendar <- function(x) {
-  rschedule_events(x$rbundle)
+rbundle_restore.calendar <- function(x, to) {
+  new_calendar(
+    name = to$name,
+    since = to$since,
+    until = to$until,
+    adjust_on = to$adjust_on,
+    adjustment = to$adjustment,
+    rholidays = to$rholidays,
+
+    rschedules = x$rschedules,
+    rdates = x$rdates,
+    exdates = x$exdates
+  )
 }
 
 # ------------------------------------------------------------------------------
@@ -48,14 +58,12 @@ add_rholiday <- function(x,
   adjust_on <- adjust_on %||% x$adjust_on
   adjustment <- adjustment %||% x$adjustment
 
+  # Build the rholiday
   rholiday <- rholiday_fn(since, until, adjust_on, adjustment)
 
-  # TODO: Is this right? What if we change the since/until dates?
-  if (rholiday_exists(rholiday, x)) {
-    return(x)
-  }
-
+  # Add to both the rholiday list and the total rschedules list
   rholidays <- c(x$rholidays, list(rholiday))
+  rschedules <- c(x$rschedules, list(rholiday))
 
   new_calendar(
     name = x$name,
@@ -63,45 +71,10 @@ add_rholiday <- function(x,
     until = x$until,
     adjust_on = x$adjust_on,
     adjustment = x$adjustment,
-    rholidays = rholidays
-  )
-}
-
-# ------------------------------------------------------------------------------
-
-# Remove by name or by object that has that name
-remove_rholiday <- function(x, rholiday) {
-  validate_calendar(x, x_arg = "x")
-
-  if (is_rholiday(rholiday)) {
-    rholiday <- rholiday_name(rholiday)
-  }
-  if (!is_string(rholiday)) {
-    abort("`rholiday` must be a single character name or an rholiday object.")
-  }
-
-  names <- calendar_names(x)
-
-  indicator <- vec_in(rholiday, names)
-  name_exists <- any(indicator)
-
-  # Early return if name didn't exist
-  if (!name_exists) {
-    return(x)
-  }
-
-  keep <- !indicator
-
-  rholidays <- x$rholidays
-  rholidays <- rholidays[keep]
-
-  new_calendar(
-    name = x$name,
-    since = x$since,
-    until = x$until,
-    adjust_on = x$adjust_on,
-    adjustment = x$adjustment,
-    rholidays = rholidays
+    rholidays = rholidays,
+    rschedules = rschedules,
+    rdates = x$rdates,
+    exdates = x$exdates
   )
 }
 
@@ -112,7 +85,10 @@ new_calendar <- function(name,
                          until,
                          adjust_on,
                          adjustment,
-                         rholidays) {
+                         rholidays = list(),
+                         rschedules = list(),
+                         rdates = new_date(),
+                         exdates = new_date()) {
   if (!(is.null(name) || is_string(name))) {
     abort("`name` must be a size 1 character vector or `NULL`.")
   }
@@ -121,19 +97,20 @@ new_calendar <- function(name,
     abort("`rholidays` must be a list of rholidays.")
   }
 
-  rbundle <- new_rbundle(rschedules = rholidays)
+  new_rbundle(
+    rschedules = rschedules,
+    rdates = rdates,
+    exdates = exdates,
 
-  data <- list(
     name = name,
     since = since,
     until = until,
     adjust_on = adjust_on,
     adjustment = adjustment,
     rholidays = rholidays,
-    rbundle = rbundle
-  )
 
-  new_rschedule(data, class = "calendar")
+    class = "calendar"
+  )
 }
 
 # ------------------------------------------------------------------------------
@@ -147,17 +124,6 @@ validate_calendar <- function(x, x_arg = "calendar") {
     glubort("`{x_arg}` must be a calendar.")
   }
   invisible(x)
-}
-
-# ------------------------------------------------------------------------------
-
-rholiday_exists <- function(rholiday, calendar) {
-  names <- calendar_names(calendar)
-  rholiday_name(rholiday) %in% names
-}
-
-calendar_names <- function(x) {
-  map_chr(x$rholidays, rholiday_name)
 }
 
 # ------------------------------------------------------------------------------

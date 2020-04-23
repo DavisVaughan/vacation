@@ -3,21 +3,35 @@ basic method
 ============
 
 > calendar()
-<calendar[1970-01-01 / 2040-01-01]>
+<calendar[1970-01-01 / 2040-01-01 / 0 rschedules / 0 rdates / 0 exdates]>
 
 > calendar("USA")
-<calendar[USA / 1970-01-01 / 2040-01-01]>
+<calendar[USA / 1970-01-01 / 2040-01-01 / 0 rschedules / 0 rdates / 0 exdates]>
 
 
 can add holidays
 ================
 
-> add_hldy(calendar(), hldy_christmas())
-<calendar[1970-01-01 / 2040-01-01]>
+> add_rholiday(calendar(), hldy_christmas)
+<calendar[1970-01-01 / 2040-01-01 / 0 rschedules / 0 rdates / 0 exdates]>
 - Christmas
 
-> add_hldy(add_hldy(calendar(), hldy_christmas()), hldy_martin_luther_king_jr_day())
-<calendar[1970-01-01 / 2040-01-01]>
+> add_rholiday(add_rholiday(calendar(), hldy_christmas),
++ hldy_martin_luther_king_jr_day)
+<calendar[1970-01-01 / 2040-01-01 / 0 rschedules / 0 rdates / 0 exdates]>
 - Christmas
 - Martin Luther King Jr. Day
+
+
+can add rschedules / rdates / exdates
+=====================================
+
+> add_rschedule(calendar(), weekly())
+<calendar[1970-01-01 / 2040-01-01 / 1 rschedules / 0 rdates / 0 exdates]>
+
+> add_rdate(calendar(), "2019-01-01")
+<calendar[1970-01-01 / 2040-01-01 / 0 rschedules / 1 rdates / 0 exdates]>
+
+> add_exdate(calendar(), "2019-01-01")
+<calendar[1970-01-01 / 2040-01-01 / 0 rschedules / 0 rdates / 1 exdates]>
 
