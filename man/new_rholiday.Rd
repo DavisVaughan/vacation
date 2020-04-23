@@ -49,6 +49,9 @@ Otherwise, an adjustment function to apply to problematic dates. Typically
 one of the pre-existing adjustment functions, like
 \code{\link[almanac:adj_nearest]{almanac::adj_nearest()}}.}
 }
+\value{
+A rholiday.
+}
 \description{
 \code{new_rholiday()} constructs a new rholiday object. An rholiday is an
 rschedule that can be used with any almanac function, like

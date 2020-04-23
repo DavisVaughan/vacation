@@ -40,6 +40,9 @@
 #'   one of the pre-existing adjustment functions, like
 #'   [almanac::adj_nearest()].
 #'
+#' @return
+#' A rholiday.
+#'
 #' @export
 #' @examples
 #' library(almanac)
