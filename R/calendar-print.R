@@ -31,13 +31,13 @@ format_calendar_header <- function(x) {
 }
 
 format_calendar_body <- function(x) {
-  hldys <- x$hldys
+  rholidays <- x$rholidays
 
-  if (length(hldys) == 0L) {
+  if (length(rholidays) == 0L) {
     return(NULL)
   }
 
-  names <- map_chr(hldys, hldy_name)
+  names <- map_chr(rholidays, rholiday_name)
   names <- glue::glue("- {names}")
   names <- glue::glue_collapse(names, sep = "\n")
 

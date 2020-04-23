@@ -1,4 +1,4 @@
-new_hldy <- function(name, generator, adjust_on, adjustment) {
+new_rholiday <- function(name, since, until, adjust_on, adjustment, generator) {
   if (!is_string(name)) {
     abort("`name` must be a size 1 character vector.")
   }
@@ -6,45 +6,65 @@ new_hldy <- function(name, generator, adjust_on, adjustment) {
   validate_generator(generator)
   validate_adjust_on_and_adjustment(adjust_on, adjustment)
 
+  rschedule <- generator(since, until)
+  rschedule <- rholiday_adjust(rschedule, adjust_on, adjustment)
+
   data <- list(
     name = name,
-    generator = generator,
-    adjust_on = adjust_on,
-    adjustment = adjustment
+    since = since,
+    until = until,
+    rschedule = rschedule
   )
 
-  structure(data, class = "hldy")
+  new_rschedule(data, "rholiday")
 }
 
 # ------------------------------------------------------------------------------
 
 #' @export
-print.hldy <- function(x, ...) {
+rschedule_events.rholiday <- function(x) {
+  rschedule_events(x$rschedule)
+}
+
+# ------------------------------------------------------------------------------
+
+#' @export
+print.rholiday <- function(x, ...) {
   print(format(x))
   invisible(x)
 }
 
 #' @export
-format.hldy <- function(x, ...) {
-  name <- hldy_name(x)
-  glue("<hldy[{name}]>")
-}
-
-hldy_name <- function(x) {
-  x$name
+format.rholiday <- function(x, ...) {
+  name <- rholiday_name(x)
+  glue("<rholiday[{name}]>")
 }
 
 # ------------------------------------------------------------------------------
 
-is_hldy <- function(x) {
-  inherits(x, "hldy")
+is_rholiday <- function(x) {
+  inherits(x, "rholiday")
 }
 
-validate_hldy <- function(x, x_arg = "hldy") {
-  if (!is_hldy(x)) {
-    glubort("`{x_arg}` must be a hldy.")
+validate_rholiday <- function(x, x_arg = "rholiday") {
+  if (!is_rholiday(x)) {
+    glubort("`{x_arg}` must be an rholiday.")
   }
   invisible(x)
+}
+
+# ------------------------------------------------------------------------------
+
+rholiday_adjust <- function(rschedule, adjust_on, adjustment) {
+  if (is.null(adjust_on)) {
+    return(rschedule)
+  }
+
+  radjusted(rschedule, adjust_on, adjustment)
+}
+
+rholiday_name <- function(x) {
+  x$name
 }
 
 # ------------------------------------------------------------------------------

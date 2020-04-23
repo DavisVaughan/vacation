@@ -1,9 +1,14 @@
-hldy_martin_luther_king_jr_day <- function(adjust_on = NULL, adjustment = NULL) {
-  new_hldy(
-    "Martin Luther King Jr. Day",
-    hldy_martin_luther_king_jr_day_generator,
-    adjust_on,
-    adjustment
+hldy_martin_luther_king_jr_day <- function(since = "1970-01-01",
+                                           until = "2040-01-01",
+                                           adjust_on = NULL,
+                                           adjustment = NULL) {
+  new_rholiday(
+    name = "Martin Luther King Jr. Day",
+    since = since,
+    until = until,
+    adjust_on = adjust_on,
+    adjustment = adjustment,
+    generator = hldy_martin_luther_king_jr_day_generator
   )
 }
 

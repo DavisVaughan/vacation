@@ -1,15 +1,20 @@
-hldy_christmas <- function(adjust_on = NULL, adjustment = NULL) {
-  new_hldy(
-    "Christmas",
-    hldy_christmas_generator,
-    adjust_on,
-    adjustment
+hldy_christmas <- function(since = "1970-01-01",
+                           until = "2040-01-01",
+                           adjust_on = NULL,
+                           adjustment = NULL) {
+  new_rholiday(
+    name = "Christmas",
+    since = since,
+    until = until,
+    adjust_on = adjust_on,
+    adjustment = adjustment,
+    generator = hldy_christmas_generator
   )
 }
 
 hldy_christmas_generator <- function(since, until) {
-  rrule <- yearly(since, until)
-  rrule <- recur_on_ymonth(rrule, 12L)
-  rrule <- recur_on_mday(rrule, 25L)
-  rrule
+  rschedule <- yearly(since, until)
+  rschedule <- recur_on_ymonth(rschedule, 12L)
+  rschedule <- recur_on_mday(rschedule, 25L)
+  rschedule
 }

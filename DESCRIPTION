@@ -23,7 +23,8 @@ Imports:
     glue,
     rlang,
     vctrs (>= 0.2.99.9011),
-    lubridate
+    lubridate,
+    ellipsis
 Suggests: 
     testthat,
     covr

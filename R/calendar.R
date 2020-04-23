@@ -17,7 +17,8 @@ calendar <- function(name = NULL,
     since = since,
     until = until,
     adjust_on = adjust_on,
-    adjustment = adjustment
+    adjustment = adjustment,
+    rholidays = list()
   )
 }
 
@@ -30,33 +31,31 @@ rschedule_events.calendar <- function(x) {
 
 # ------------------------------------------------------------------------------
 
-add_hldy <- function(x, hldy) {
-  validate_calendar(x)
-  validate_hldy(hldy)
+add_rholiday <- function(x,
+                         rholiday_fn,
+                         ...,
+                         since = NULL,
+                         until = NULL,
+                         adjust_on = NULL,
+                         adjustment = NULL) {
+  ellipsis::check_dots_empty()
 
-  if (hldy_exists(hldy, x)) {
+  validate_calendar(x, x_arg = "x")
+  validate_rholiday_fn(rholiday_fn, x_arg = "rholiday_fn")
+
+  since <- since %||% x$since
+  until <- until %||% x$until
+  adjust_on <- adjust_on %||% x$adjust_on
+  adjustment <- adjustment %||% x$adjustment
+
+  rholiday <- rholiday_fn(since, until, adjust_on, adjustment)
+
+  # TODO: Is this right? What if we change the since/until dates?
+  if (rholiday_exists(rholiday, x)) {
     return(x)
   }
 
-  since <- x$since
-  until <- x$until
-  generator <- hldy$generator
-
-  # Generate the holiday rschedule
-  rschedule <- generator(since, until)
-
-  # Check for holiday specific adjustment if it has one, then
-  # drop back to calendar adjustment if it exists.
-  adjust_on <- hldy$adjust_on %||% x$adjust_on
-  adjustment <- hldy$adjustment %||% x$adjustment
-
-  # Optionally create an adjusted version of the rschedule
-  if (!is.null(adjust_on)) {
-    rschedule <- radjusted(rschedule, adjust_on, adjustment)
-  }
-
-  hldys <- c(x$hldys, list(hldy))
-  rschedules <- c(x$rschedules, list(rschedule))
+  rholidays <- c(x$rholidays, list(rholiday))
 
   new_calendar(
     name = x$name,
@@ -64,27 +63,26 @@ add_hldy <- function(x, hldy) {
     until = x$until,
     adjust_on = x$adjust_on,
     adjustment = x$adjustment,
-    hldys = hldys,
-    rschedules = rschedules
+    rholidays = rholidays
   )
 }
 
 # ------------------------------------------------------------------------------
 
 # Remove by name or by object that has that name
-remove_hldy <- function(x, hldy) {
+remove_rholiday <- function(x, rholiday) {
   validate_calendar(x, x_arg = "x")
 
-  if (is_hldy(hldy)) {
-    hldy <- hldy_name(hldy)
+  if (is_rholiday(rholiday)) {
+    rholiday <- rholiday_name(rholiday)
   }
-  if (!is_string(hldy)) {
-    abort("`hldy` must be a single character name or a hldy object.")
+  if (!is_string(rholiday)) {
+    abort("`rholiday` must be a single character name or an rholiday object.")
   }
 
   names <- calendar_names(x)
 
-  indicator <- vec_in(hldy, names)
+  indicator <- vec_in(rholiday, names)
   name_exists <- any(indicator)
 
   # Early return if name didn't exist
@@ -94,11 +92,8 @@ remove_hldy <- function(x, hldy) {
 
   keep <- !indicator
 
-  hldys <- x$hldys
-  rschedules <- x$rschedules
-
-  hldys <- hldys[keep]
-  rschedules <- rschedules[keep]
+  rholidays <- x$rholidays
+  rholidays <- rholidays[keep]
 
   new_calendar(
     name = x$name,
@@ -106,8 +101,7 @@ remove_hldy <- function(x, hldy) {
     until = x$until,
     adjust_on = x$adjust_on,
     adjustment = x$adjustment,
-    hldys = hldys,
-    rschedules = rschedules
+    rholidays = rholidays
   )
 }
 
@@ -118,25 +112,16 @@ new_calendar <- function(name,
                          until,
                          adjust_on,
                          adjustment,
-                         hldys = list(),
-                         rschedules = list()) {
-  if (!(is.null(name) || is_character(name, n = 1L))) {
+                         rholidays) {
+  if (!(is.null(name) || is_string(name))) {
     abort("`name` must be a size 1 character vector or `NULL`.")
   }
 
-  if (!is_list(hldys)) {
-    abort("`hldys` must be a list of holidays.")
+  if (!is_list(rholidays)) {
+    abort("`rholidays` must be a list of rholidays.")
   }
 
-  if (!is_list(rschedules)) {
-    abort("`rschedules` must be a list of rschedules")
-  }
-
-  if (length(rschedules) != length(hldys)) {
-    abort("`rschedules` length must match `hldys` length.")
-  }
-
-  rbundle <- new_rbundle(rschedules = rschedules)
+  rbundle <- new_rbundle(rschedules = rholidays)
 
   data <- list(
     name = name,
@@ -144,8 +129,7 @@ new_calendar <- function(name,
     until = until,
     adjust_on = adjust_on,
     adjustment = adjustment,
-    hldys = hldys,
-    rschedules = rschedules,
+    rholidays = rholidays,
     rbundle = rbundle
   )
 
@@ -167,11 +151,35 @@ validate_calendar <- function(x, x_arg = "calendar") {
 
 # ------------------------------------------------------------------------------
 
-hldy_exists <- function(hldy, calendar) {
+rholiday_exists <- function(rholiday, calendar) {
   names <- calendar_names(calendar)
-  hldy_name(hldy) %in% names
+  rholiday_name(rholiday) %in% names
 }
 
 calendar_names <- function(x) {
-  map_chr(x$hldys, hldy_name)
+  map_chr(x$rholidays, rholiday_name)
+}
+
+# ------------------------------------------------------------------------------
+
+validate_rholiday_fn <- function(x, x_arg = "") {
+  if (nzchar(x_arg)) {
+    x_arg <- glue(" `{x_arg}`")
+  }
+
+  if (!is_function(x)) {
+    glubort("Input{x_arg} must be a function.")
+  }
+
+  names <- fn_fmls_names(x)
+
+  if (length(names) != 4L) {
+    glubort("Input{x_arg} must have 4 arguments.")
+  }
+
+  if (!identical(names, c("since", "until", "adjust_on", "adjustment"))) {
+    glubort("Input{x_arg} must have argument names: `since`, `until`, `adjust_on`, `adjustment`.")
+  }
+
+  invisible(x)
 }
