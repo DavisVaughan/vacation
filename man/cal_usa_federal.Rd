@@ -37,6 +37,8 @@ An rcalendar.
 }
 
 \examples{
+library(almanac)
+
 cal <- cal_usa_federal()
 
 alma_search("2000-01-01", "2001-01-01", cal)
