@@ -1,8 +1,8 @@
-calendar <- function(name = NULL,
-                     since = "1970-01-01",
-                     until = "2040-01-01",
-                     adjust_on = NULL,
-                     adjustment = NULL) {
+rcalendar <- function(name = NULL,
+                      since = "1970-01-01",
+                      until = "2040-01-01",
+                      adjust_on = NULL,
+                      adjustment = NULL) {
   since <- check_since(since)
   until <- check_until(until)
 
@@ -12,7 +12,7 @@ calendar <- function(name = NULL,
 
   validate_adjust_on_and_adjustment(adjust_on, adjustment)
 
-  new_calendar(
+  new_rcalendar(
     name = name,
     since = since,
     until = until,
@@ -24,8 +24,8 @@ calendar <- function(name = NULL,
 # ------------------------------------------------------------------------------
 
 #' @export
-rbundle_restore.calendar <- function(x, to) {
-  new_calendar(
+rbundle_restore.rcalendar <- function(x, to) {
+  new_rcalendar(
     name = to$name,
     since = to$since,
     until = to$until,
@@ -50,7 +50,7 @@ add_rholiday <- function(x,
                          adjustment = NULL) {
   ellipsis::check_dots_empty()
 
-  validate_calendar(x, x_arg = "x")
+  validate_rcalendar(x, x_arg = "x")
   validate_rholiday_fn(rholiday_fn, x_arg = "rholiday_fn")
 
   since <- since %||% x$since
@@ -65,7 +65,7 @@ add_rholiday <- function(x,
   rholidays <- c(x$rholidays, list(rholiday))
   rschedules <- c(x$rschedules, list(rholiday))
 
-  new_calendar(
+  new_rcalendar(
     name = x$name,
     since = x$since,
     until = x$until,
@@ -80,15 +80,15 @@ add_rholiday <- function(x,
 
 # ------------------------------------------------------------------------------
 
-new_calendar <- function(name,
-                         since,
-                         until,
-                         adjust_on,
-                         adjustment,
-                         rholidays = list(),
-                         rschedules = list(),
-                         rdates = new_date(),
-                         exdates = new_date()) {
+new_rcalendar <- function(name,
+                          since,
+                          until,
+                          adjust_on,
+                          adjustment,
+                          rholidays = list(),
+                          rschedules = list(),
+                          rdates = new_date(),
+                          exdates = new_date()) {
   if (!(is.null(name) || is_string(name))) {
     abort("`name` must be a size 1 character vector or `NULL`.")
   }
@@ -109,19 +109,19 @@ new_calendar <- function(name,
     adjustment = adjustment,
     rholidays = rholidays,
 
-    class = "calendar"
+    class = "rcalendar"
   )
 }
 
 # ------------------------------------------------------------------------------
 
-is_calendar <- function(x) {
-  inherits(x, "calendar")
+is_rcalendar <- function(x) {
+  inherits(x, "rcalendar")
 }
 
-validate_calendar <- function(x, x_arg = "calendar") {
-  if (!is_calendar(x)) {
-    glubort("`{x_arg}` must be a calendar.")
+validate_rcalendar <- function(x, x_arg = "rcalendar") {
+  if (!is_rcalendar(x)) {
+    glubort("`{x_arg}` must be a rcalendar.")
   }
   invisible(x)
 }

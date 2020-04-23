@@ -1,13 +1,13 @@
 #' @export
-print.calendar <- function(x, ...) {
+print.rcalendar <- function(x, ...) {
   print(format(x))
   invisible(x)
 }
 
 #' @export
-format.calendar <- function(x, ...) {
-  header <- format_calendar_header(x)
-  body <- format_calendar_body(x)
+format.rcalendar <- function(x, ...) {
+  header <- format_rcalendar_header(x)
+  body <- format_rcalendar_body(x)
 
   if (is.null(body)) {
     header
@@ -18,7 +18,7 @@ format.calendar <- function(x, ...) {
 
 # ------------------------------------------------------------------------------
 
-format_calendar_header <- function(x) {
+format_rcalendar_header <- function(x) {
   since <- x$since
   until <- x$until
   name <- x$name
@@ -40,10 +40,10 @@ format_calendar_header <- function(x) {
   rdates <- glue("{n_rdates} rdates / ")
   exdates <- glue("{n_exdates} exdates")
 
-  glue("<calendar[{name}{since}{until}{rschedules}{rdates}{exdates}]>")
+  glue("<rcalendar[{name}{since}{until}{rschedules}{rdates}{exdates}]>")
 }
 
-format_calendar_body <- function(x) {
+format_rcalendar_body <- function(x) {
   rholidays <- x$rholidays
 
   if (length(rholidays) == 0L) {
