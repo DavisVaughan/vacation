@@ -1,10 +1,84 @@
-new_rholiday <- function(name, since, until, adjust_on, adjustment, generator) {
+#' Create a new holiday
+#'
+#' `new_rholiday()` constructs a new rholiday object. An rholiday is an
+#' rschedule that can be used with any almanac function, like
+#' [almanac::alma_events()]. rholidays can also be added to rcalendars through
+#' [add_rholiday()].
+#'
+#' @param name `[character(1)]`
+#'
+#'   A required name for the holiday.
+#'
+#' @param since `[Date(1)]`
+#'
+#'   The lower bound on where to begin looking for the holiday.
+#'
+#' @param until `[Date(1)]`
+#'
+#'   The upper bound on where to end looking for the holiday.
+#'
+#' @param generator `[function]`
+#'
+#'   A function that generates an rschedule for the holiday. The function
+#'   takes two arguments, `since` and `until`, which should be passed to
+#'   the created rschedule.
+#'
+#' @param adjust_on `[NULL / rschedule]`
+#'
+#'   If `NULL`, no adjustment is made to the holiday.
+#'
+#'   Otherwise, an rschedule that defines when an adjustment to the holiday
+#'   should be made. For example, set to an rschedule for "on weekends", and
+#'   supply an `adjustment` of `adj_nearest()` to roll the holiday to the
+#'   nearest weekday.
+#'
+#' @param adjustment `[NULL / function]`
+#'
+#'   If `NULL`, no adjustment is made to the holiday.
+#'
+#'   Otherwise, an adjustment function to apply to problematic dates. Typically
+#'   one of the pre-existing adjustment functions, like
+#'   [almanac::adj_nearest()].
+#'
+#' @export
+#' @examples
+#' library(almanac)
+#'
+#' thanksgiving_generator <- function(since, until) {
+#'   yearly(since = since, until = until) %>%
+#'     recur_on_ymonth("November") %>%
+#'     recur_on_wday("Thursday", nth = 4)
+#' }
+#'
+#' thanksgiving <- new_rholiday(
+#'   name = "thanksgiving",
+#'   since = "1950-01-01",
+#'   until = "1980-01-01",
+#'   generator = thanksgiving_generator
+#' )
+#'
+#' thanksgiving
+#'
+#' alma_events(thanksgiving)
+new_rholiday <- function(name,
+                         since,
+                         until,
+                         generator,
+                         adjust_on = NULL,
+                         adjustment = NULL) {
   if (!is_string(name)) {
     abort("`name` must be a size 1 character vector.")
   }
 
-  validate_generator(generator)
+  since <- check_since(since)
+  until <- check_until(until)
+
+  if (since > until) {
+    abort("`since` must be before `until`.")
+  }
+
   validate_adjust_on_and_adjustment(adjust_on, adjustment)
+  validate_generator(generator)
 
   rschedule <- generator(since, until)
   rschedule <- rholiday_adjust(rschedule, adjust_on, adjustment)
@@ -77,10 +151,10 @@ validate_generator <- function(generator) {
     abort("`generator` must be a function.")
   }
 
-  fmls <- fn_fmls(generator)
+  names <- fn_fmls_names(generator)
 
-  if (length(fmls) != 2L) {
-    abort("`generator` must have two arguments, `since`, `until`.")
+  if (length(names) != 2L || !identical(names, c("since", "until"))) {
+    abort("`generator` must have two arguments, `since` and `until`.")
   }
 
   invisible(generator)
@@ -114,9 +188,9 @@ validate_adjustment <- function(x, x_arg = "") {
     glubort("Input{x_arg} must be a function.")
   }
 
-  fmls <- fn_fmls(x)
+  names <- fn_fmls_names(x)
 
-  if (length(fmls) != 2L) {
+  if (length(names) != 2L || !identical(names, c("x", "rschedule"))) {
     glubort("Input{x_arg} must have two arguments, `x` and `rschedule`.")
   }
 

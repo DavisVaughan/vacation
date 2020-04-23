@@ -1,0 +1,8 @@
+
+Basic print method
+==================
+
+> generator <- (function(since, until) weekly(since, until))
+> new_rholiday("hldy", "1990-01-01", "1991-01-01", generator)
+<rholiday[hldy / 1990-01-01 / 1991-01-01]>
+

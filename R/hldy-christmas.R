@@ -6,9 +6,9 @@ hldy_christmas <- function(since = "1900-01-01",
     name = "Christmas",
     since = since,
     until = until,
+    generator = hldy_christmas_generator,
     adjust_on = adjust_on,
-    adjustment = adjustment,
-    generator = hldy_christmas_generator
+    adjustment = adjustment
   )
 }
 

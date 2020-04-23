@@ -6,9 +6,9 @@ hldy_martin_luther_king_jr_day <- function(since = "1900-01-01",
     name = "Martin Luther King Jr. Day",
     since = since,
     until = until,
+    generator = hldy_martin_luther_king_jr_day_generator,
     adjust_on = adjust_on,
-    adjustment = adjustment,
-    generator = hldy_martin_luther_king_jr_day_generator
+    adjustment = adjustment
   )
 }
 
