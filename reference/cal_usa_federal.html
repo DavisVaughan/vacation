@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Function reference • vacation</title>
+<title>Calendar - USA Federal — cal_usa_federal • vacation</title>
 
 
 <!-- jquery -->
@@ -39,7 +39,8 @@
 
 
 
-<meta property="og:title" content="Function reference" />
+<meta property="og:title" content="Calendar - USA Federal — cal_usa_federal" />
+<meta property="og:description" content="cal_usa_federal() is a federal calendar for the United States." />
 
 
 
@@ -58,7 +59,7 @@
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    <div class="container template-reference-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -105,66 +106,60 @@
       </header>
 
 <div class="row">
-  <div class="contents col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Reference</h1>
+    <h1>Calendar - USA Federal</h1>
+    <small class="dont-index">Source: <a href='https://github.com/DavisVaughan/vacation/blob/master/R/cal-usa-federal.R'><code>R/cal-usa-federal.R</code></a></small>
+    <div class="hidden name"><code>cal_usa_federal.Rd</code></div>
     </div>
 
-    <table class="ref-index">
+    <div class="ref-description">
+    <p><code>cal_usa_federal()</code> is a federal calendar for the United States.</p>
+    </div>
 
-    <colgroup>
-      
-      <col class="alias" />
-      <col class="title" />
-    </colgroup>
+    <pre class="usage"><span class='fu'>cal_usa_federal</span>(<span class='kw'>since</span> <span class='kw'>=</span> <span class='st'>"1900-01-01"</span>, <span class='kw'>until</span> <span class='kw'>=</span> <span class='st'>"2100-01-01"</span>, <span class='kw'>observed</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
 
-    <tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
-          <p class="section-desc"></p>
-        </th>
-      </tr>
-      
-      
-    </tbody><tbody>
-      
-      
-      <tr>
-        
-        <td>
-          <p><code><a href="cal_usa_federal.html">cal_usa_federal()</a></code> </p>
-        </td>
-        <td><p>Calendar - USA Federal</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="hldy_christmas.html">hldy_christmas()</a></code> </p>
-        </td>
-        <td><p>Christmas</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="hldy_martin_luther_king_jr_day.html">hldy_martin_luther_king_jr_day()</a></code> </p>
-        </td>
-        <td><p>Christmas</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="hldy_new_years_day.html">hldy_new_years_day()</a></code> </p>
-        </td>
-        <td><p>New Year's Day</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="new_rholiday.html">new_rholiday()</a></code> </p>
-        </td>
-        <td><p>Create a new holiday</p></td>
-      </tr>
-    </tbody>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>since</th>
+      <td><p><code>[Date(1)]</code></p>
+<p>The lower bound on where to begin looking for the holiday.</p></td>
+    </tr>
+    <tr>
+      <th>until</th>
+      <td><p><code>[Date(1)]</code></p>
+<p>The upper bound on where to end looking for the holiday.</p></td>
+    </tr>
+    <tr>
+      <th>observed</th>
+      <td><p><code>[logical(1)]</code></p>
+<p>If the holiday falls on a weekend, should the observed date be returned?
+The observed date is the nearest weekday. If <code>FALSE</code>, the exact holiday
+date is returned.</p></td>
+    </tr>
     </table>
-  </div>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>An rcalendar.</p>
+    <h2 class="hasAnchor" id="holidays"><a class="anchor" href="#holidays"></a>Holidays</h2>
+
+    
+
+<ul>
+<li><p>Martin Luther King Jr. Day</p></li>
+<li><p>Christmas</p></li>
+<li><p>New Year's Day</p></li>
+</ul>
+
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='no'>cal</span> <span class='kw'>&lt;-</span> <span class='fu'>cal_usa_federal</span>()
+
+<span class='fu'>alma_search</span>(<span class='st'>"2000-01-01"</span>, <span class='st'>"2001-01-01"</span>, <span class='no'>cal</span>)</div><div class='output co'>#&gt; <span class='error'>Error in alma_search("2000-01-01", "2001-01-01", cal): could not find function "alma_search"</span></div></pre>
+  </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
       <h2 data-toc-skip>Contents</h2>
