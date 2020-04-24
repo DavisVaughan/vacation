@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Christmas — hldy_martin_luther_king_jr_day • vacation</title>
+<title>Construct an empty rcalendar — rcalendar • vacation</title>
 
 
 <!-- jquery -->
@@ -39,9 +39,11 @@
 
 
 
-<meta property="og:title" content="Christmas — hldy_martin_luther_king_jr_day" />
-<meta property="og:description" content="hldy_martin_luther_king_jr_day() is a holiday for Martin Luther King
-Jr. Day, the third Monday in January." />
+<meta property="og:title" content="Construct an empty rcalendar — rcalendar" />
+<meta property="og:description" content="rcalendar() is the starting point for constructing a new custom calendar.
+Holidays can be added to it with add_rholiday().
+By default, since, until, adjust_on, and adjustment all propagate
+to holidays added with add_rholiday()." />
 
 
 
@@ -109,17 +111,20 @@ Jr. Day, the third Monday in January." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Christmas</h1>
-    <small class="dont-index">Source: <a href='https://github.com/DavisVaughan/vacation/blob/master/R/hldy-martin-luther-king-jr-day.R'><code>R/hldy-martin-luther-king-jr-day.R</code></a></small>
-    <div class="hidden name"><code>hldy_martin_luther_king_jr_day.Rd</code></div>
+    <h1>Construct an empty rcalendar</h1>
+    <small class="dont-index">Source: <a href='https://github.com/DavisVaughan/vacation/blob/master/R/rcalendar.R'><code>R/rcalendar.R</code></a></small>
+    <div class="hidden name"><code>rcalendar.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p><code>hldy_martin_luther_king_jr_day()</code> is a holiday for Martin Luther King
-Jr. Day, the third Monday in January.</p>
+    <p><code>rcalendar()</code> is the starting point for constructing a new custom calendar.
+Holidays can be added to it with <code><a href='add_rholiday.html'>add_rholiday()</a></code>.</p>
+<p>By default, <code>since</code>, <code>until</code>, <code>adjust_on</code>, and <code>adjustment</code> all propagate
+to holidays added with <code><a href='add_rholiday.html'>add_rholiday()</a></code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>hldy_martin_luther_king_jr_day</span>(
+    <pre class="usage"><span class='fu'>rcalendar</span>(
+  <span class='kw'>name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>since</span> <span class='kw'>=</span> <span class='st'>"1900-01-01"</span>,
   <span class='kw'>until</span> <span class='kw'>=</span> <span class='st'>"2100-01-01"</span>,
   <span class='kw'>adjust_on</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
@@ -130,14 +135,19 @@ Jr. Day, the third Monday in January.</p>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
+      <th>name</th>
+      <td><p><code>[NULL / character(1)]</code></p>
+<p>An optional name for the calendar.</p></td>
+    </tr>
+    <tr>
       <th>since</th>
       <td><p><code>[Date(1)]</code></p>
-<p>The lower bound on where to begin looking for the holiday.</p></td>
+<p>A start date for the rcalendar.</p></td>
     </tr>
     <tr>
       <th>until</th>
       <td><p><code>[Date(1)]</code></p>
-<p>The upper bound on where to end looking for the holiday.</p></td>
+<p>An end date for the rcalendar.</p></td>
     </tr>
     <tr>
       <th>adjust_on</th>
@@ -160,12 +170,16 @@ one of the pre-existing adjustment functions, like
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A rholiday.</p>
+    <p>An empty rcalendar.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>almanac</span>)
 
-<span class='fu'><a href='https://rdrr.io/pkg/almanac/man/alma_search.html'>alma_search</a></span>(<span class='st'>"1990-01-01"</span>, <span class='st'>"1995-01-01"</span>, <span class='fu'>hldy_martin_luther_king_jr_day</span>())</div><div class='output co'>#&gt; [1] "1990-01-15" "1991-01-21" "1992-01-20" "1993-01-18" "1994-01-17"</div></pre>
+<span class='no'>cal</span> <span class='kw'>&lt;-</span> <span class='fu'>rcalendar</span>() <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='add_rholiday.html'>add_rholiday</a></span>(<span class='no'>hldy_christmas</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='add_rholiday.html'>add_rholiday</a></span>(<span class='no'>hldy_new_years_day</span>)
+
+<span class='fu'><a href='https://rdrr.io/pkg/almanac/man/alma_search.html'>alma_search</a></span>(<span class='st'>"2019-01-01"</span>, <span class='st'>"2019-12-31"</span>, <span class='no'>cal</span>)</div><div class='output co'>#&gt; [1] "2019-01-01" "2019-12-25"</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

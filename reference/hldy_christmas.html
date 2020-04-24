@@ -140,11 +140,11 @@
     <tr>
       <th>adjust_on</th>
       <td><p><code>[NULL / rschedule]</code></p>
-<p>If <code>NULL</code>, no adjustment is made to the holiday.</p>
-<p>Otherwise, an rschedule that defines when an adjustment to the holiday
-should be made. For example, set to an rschedule for "on weekends", and
-supply an <code>adjustment</code> of <code>adj_nearest()</code> to roll the holiday to the
-nearest weekday.</p></td>
+<p>If <code>NULL</code>, no adjustment is made.</p>
+<p>Otherwise, an rschedule that defines when an adjustment should be made.
+For example, set to an rschedule for "on weekends", and
+supply an <code>adjustment</code> of <code>adj_nearest()</code> to roll holidays that fall
+on a weekend to the nearest weekday.</p></td>
     </tr>
     <tr>
       <th>adjustment</th>
@@ -161,15 +161,19 @@ one of the pre-existing adjustment functions, like
     <p>A rholiday.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>alma_search</span>(<span class='st'>"1990-01-01"</span>, <span class='st'>"1995-01-01"</span>, <span class='fu'>hldy_christmas</span>())</div><div class='output co'>#&gt; <span class='error'>Error in alma_search("1990-01-01", "1995-01-01", hldy_christmas()): could not find function "alma_search"</span></div><div class='input'>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>almanac</span>)
+
+<span class='fu'><a href='https://rdrr.io/pkg/almanac/man/alma_search.html'>alma_search</a></span>(<span class='st'>"1990-01-01"</span>, <span class='st'>"1995-01-01"</span>, <span class='fu'>hldy_christmas</span>())</div><div class='output co'>#&gt; [1] "1990-12-25" "1991-12-25" "1992-12-25" "1993-12-25" "1994-12-25"</div><div class='input'>
 <span class='co'># Adjust weekend Christmas to nearest weekday</span>
-<span class='no'>adjust_on</span> <span class='kw'>&lt;-</span> <span class='fu'>weekly</span>() <span class='kw'>%&gt;%</span>
-  <span class='fu'>recur_on_weekends</span>()</div><div class='output co'>#&gt; <span class='error'>Error in weekly() %&gt;% recur_on_weekends(): could not find function "%&gt;%"</span></div><div class='input'>
+<span class='no'>adjust_on</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/almanac/man/rrule.html'>weekly</a></span>() <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/almanac/man/recur_on_wday.html'>recur_on_weekends</a></span>()
+
 <span class='no'>christmas_adjusted</span> <span class='kw'>&lt;-</span> <span class='fu'>hldy_christmas</span>(
   <span class='kw'>adjust_on</span> <span class='kw'>=</span> <span class='no'>adjust_on</span>,
   <span class='kw'>adjustment</span> <span class='kw'>=</span> <span class='no'>adj_nearest</span>
-)</div><div class='output co'>#&gt; <span class='error'>Error in validate_adjust_on_and_adjustment(adjust_on, adjustment): object 'adjust_on' not found</span></div><div class='input'>
-<span class='fu'>alma_search</span>(<span class='st'>"1990-01-01"</span>, <span class='st'>"1995-01-01"</span>, <span class='no'>christmas_adjusted</span>)</div><div class='output co'>#&gt; <span class='error'>Error in alma_search("1990-01-01", "1995-01-01", christmas_adjusted): could not find function "alma_search"</span></div></pre>
+)
+
+<span class='fu'><a href='https://rdrr.io/pkg/almanac/man/alma_search.html'>alma_search</a></span>(<span class='st'>"1990-01-01"</span>, <span class='st'>"1995-01-01"</span>, <span class='no'>christmas_adjusted</span>)</div><div class='output co'>#&gt; [1] "1990-12-25" "1991-12-25" "1992-12-25" "1993-12-24" "1994-12-26"</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

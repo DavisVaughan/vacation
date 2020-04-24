@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Christmas — hldy_martin_luther_king_jr_day • vacation</title>
+<title>Add an rholiday to an rcalendar — add_rholiday • vacation</title>
 
 
 <!-- jquery -->
@@ -39,9 +39,14 @@
 
 
 
-<meta property="og:title" content="Christmas — hldy_martin_luther_king_jr_day" />
-<meta property="og:description" content="hldy_martin_luther_king_jr_day() is a holiday for Martin Luther King
-Jr. Day, the third Monday in January." />
+<meta property="og:title" content="Add an rholiday to an rcalendar — add_rholiday" />
+<meta property="og:description" content="add_rholiday() adds a new holiday to a calendar. To add a holiday, pass
+through the corresponding holiday function, without the parenthesis.
+add_rholiday() will take care of constructing the rholiday object with
+the correct arguments.
+Arguments passed on to the rholiday_fn (such as since and adjust_on)
+default to the corresponding arguments in the rcalendar, but can be
+overridden at the rholiday level by supplying them in add_rholiday()." />
 
 
 
@@ -109,19 +114,27 @@ Jr. Day, the third Monday in January." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Christmas</h1>
-    <small class="dont-index">Source: <a href='https://github.com/DavisVaughan/vacation/blob/master/R/hldy-martin-luther-king-jr-day.R'><code>R/hldy-martin-luther-king-jr-day.R</code></a></small>
-    <div class="hidden name"><code>hldy_martin_luther_king_jr_day.Rd</code></div>
+    <h1>Add an rholiday to an rcalendar</h1>
+    <small class="dont-index">Source: <a href='https://github.com/DavisVaughan/vacation/blob/master/R/rcalendar.R'><code>R/rcalendar.R</code></a></small>
+    <div class="hidden name"><code>add_rholiday.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p><code>hldy_martin_luther_king_jr_day()</code> is a holiday for Martin Luther King
-Jr. Day, the third Monday in January.</p>
+    <p><code>add_rholiday()</code> adds a new holiday to a calendar. To add a holiday, pass
+through the corresponding holiday <em>function</em>, without the parenthesis.
+<code>add_rholiday()</code> will take care of constructing the rholiday object with
+the correct arguments.</p>
+<p>Arguments passed on to the <code>rholiday_fn</code> (such as <code>since</code> and <code>adjust_on</code>)
+default to the corresponding arguments in the rcalendar, but can be
+overridden at the rholiday level by supplying them in <code>add_rholiday()</code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>hldy_martin_luther_king_jr_day</span>(
-  <span class='kw'>since</span> <span class='kw'>=</span> <span class='st'>"1900-01-01"</span>,
-  <span class='kw'>until</span> <span class='kw'>=</span> <span class='st'>"2100-01-01"</span>,
+    <pre class="usage"><span class='fu'>add_rholiday</span>(
+  <span class='no'>x</span>,
+  <span class='no'>rholiday_fn</span>,
+  <span class='no'>...</span>,
+  <span class='kw'>since</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>until</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>adjust_on</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>adjustment</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
 )</pre>
@@ -130,28 +143,46 @@ Jr. Day, the third Monday in January.</p>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
+      <th>x</th>
+      <td><p><code>[rcalendar]</code></p>
+<p>An rcalendar.</p></td>
+    </tr>
+    <tr>
+      <th>rholiday_fn</th>
+      <td><p><code>[function]</code></p>
+<p>An rholiday <em>function</em>, such as <code>hldy_christmas</code>. The actual function
+should be supplied, and <code>add_rholiday()</code> will take care of calling it
+with the correct arguments.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Not used.</p></td>
+    </tr>
+    <tr>
       <th>since</th>
-      <td><p><code>[Date(1)]</code></p>
-<p>The lower bound on where to begin looking for the holiday.</p></td>
+      <td><p><code>[NULL / Date(1)]</code></p>
+<p>If <code>NULL</code>, default to the <code>since</code> date of the rcalendar, <code>x</code>.</p>
+<p>Otherwise, the lower bound on where to begin looking for the holiday.</p></td>
     </tr>
     <tr>
       <th>until</th>
-      <td><p><code>[Date(1)]</code></p>
-<p>The upper bound on where to end looking for the holiday.</p></td>
+      <td><p><code>[NULL / Date(1)]</code></p>
+<p>If <code>NULL</code>, default to the <code>until</code> date of the rcalendar, <code>x</code>.</p>
+<p>Otherwise, the upper bound on where to begin looking for the holiday.</p></td>
     </tr>
     <tr>
       <th>adjust_on</th>
       <td><p><code>[NULL / rschedule]</code></p>
-<p>If <code>NULL</code>, no adjustment is made.</p>
-<p>Otherwise, an rschedule that defines when an adjustment should be made.
-For example, set to an rschedule for "on weekends", and
-supply an <code>adjustment</code> of <code>adj_nearest()</code> to roll holidays that fall
-on a weekend to the nearest weekday.</p></td>
+<p>If <code>NULL</code>, default to the <code>adjust_on</code> of the rcalendar, <code>x</code>.</p>
+<p>Otherwise, an rschedule that defines when an adjustment to the holiday
+should be made. For example, set to an rschedule for "on weekends", and
+supply an <code>adjustment</code> of <code>adj_nearest()</code> to roll the holiday to the
+nearest weekday.</p></td>
     </tr>
     <tr>
       <th>adjustment</th>
       <td><p><code>[NULL / function]</code></p>
-<p>If <code>NULL</code>, no adjustment is made to the holiday.</p>
+<p>If <code>NULL</code>, default to the <code>adjustment</code> of the rcalendar, <code>x</code>.</p>
 <p>Otherwise, an adjustment function to apply to problematic dates. Typically
 one of the pre-existing adjustment functions, like
 <code><a href='https://rdrr.io/pkg/almanac/man/adjustments.html'>almanac::adj_nearest()</a></code>.</p></td>
@@ -160,12 +191,36 @@ one of the pre-existing adjustment functions, like
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A rholiday.</p>
+    <p><code>x</code>, with a new rholiday.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>almanac</span>)
 
-<span class='fu'><a href='https://rdrr.io/pkg/almanac/man/alma_search.html'>alma_search</a></span>(<span class='st'>"1990-01-01"</span>, <span class='st'>"1995-01-01"</span>, <span class='fu'>hldy_martin_luther_king_jr_day</span>())</div><div class='output co'>#&gt; [1] "1990-01-15" "1991-01-21" "1992-01-20" "1993-01-18" "1994-01-17"</div></pre>
+<span class='no'>cal</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rcalendar.html'>rcalendar</a></span>() <span class='kw'>%&gt;%</span>
+  <span class='fu'>add_rholiday</span>(<span class='no'>hldy_christmas</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'>add_rholiday</span>(<span class='no'>hldy_new_years_day</span>)
+
+<span class='no'>cal</span></div><div class='output co'>#&gt; &lt;rcalendar[1900-01-01 / 2100-01-01 / 0 rschedules / 0 rdates / 0 exdates]&gt;
+#&gt; - Christmas
+#&gt; - New Year's Day</div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/pkg/almanac/man/alma_in.html'>alma_in</a></span>(<span class='st'>"1999-12-25"</span>, <span class='no'>cal</span>)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
+
+<span class='no'>on_weekends</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/almanac/man/rrule.html'>weekly</a></span>() <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/almanac/man/recur_on_wday.html'>recur_on_weekends</a></span>()
+
+<span class='co'># Construct a calendar that rolls weekend Christmas dates to</span>
+<span class='co'># the nearest weekday</span>
+<span class='no'>cal2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='rcalendar.html'>rcalendar</a></span>() <span class='kw'>%&gt;%</span>
+  <span class='fu'>add_rholiday</span>(
+    <span class='no'>hldy_christmas</span>,
+    <span class='kw'>adjust_on</span> <span class='kw'>=</span> <span class='no'>on_weekends</span>,
+    <span class='kw'>adjustment</span> <span class='kw'>=</span> <span class='no'>adj_nearest</span>
+  ) <span class='kw'>%&gt;%</span>
+  <span class='fu'>add_rholiday</span>(<span class='no'>hldy_new_years_day</span>)
+
+<span class='fu'><a href='https://rdrr.io/pkg/almanac/man/alma_search.html'>alma_search</a></span>(<span class='st'>"2004-01-01"</span>, <span class='st'>"2010-01-01"</span>, <span class='no'>cal2</span>)</div><div class='output co'>#&gt;  [1] "2004-01-01" "2004-12-24" "2005-01-01" "2005-12-26" "2006-01-01"
+#&gt;  [6] "2006-12-25" "2007-01-01" "2007-12-25" "2008-01-01" "2008-12-25"
+#&gt; [11] "2009-01-01" "2009-12-25" "2010-01-01"</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

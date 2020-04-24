@@ -120,7 +120,7 @@ add_rholiday()." />
     <p><code>new_rholiday()</code> constructs a new rholiday object. An rholiday is an
 rschedule that can be used with any almanac function, like
 <code><a href='https://rdrr.io/pkg/almanac/man/alma_events.html'>almanac::alma_events()</a></code>. rholidays can also be added to rcalendars through
-<code>add_rholiday()</code>.</p>
+<code><a href='add_rholiday.html'>add_rholiday()</a></code>.</p>
     </div>
 
     <pre class="usage"><span class='fu'>new_rholiday</span>(
@@ -160,11 +160,11 @@ the created rschedule.</p></td>
     <tr>
       <th>adjust_on</th>
       <td><p><code>[NULL / rschedule]</code></p>
-<p>If <code>NULL</code>, no adjustment is made to the holiday.</p>
-<p>Otherwise, an rschedule that defines when an adjustment to the holiday
-should be made. For example, set to an rschedule for "on weekends", and
-supply an <code>adjustment</code> of <code>adj_nearest()</code> to roll the holiday to the
-nearest weekday.</p></td>
+<p>If <code>NULL</code>, no adjustment is made.</p>
+<p>Otherwise, an rschedule that defines when an adjustment should be made.
+For example, set to an rschedule for "on weekends", and
+supply an <code>adjustment</code> of <code>adj_nearest()</code> to roll holidays that fall
+on a weekend to the nearest weekday.</p></td>
     </tr>
     <tr>
       <th>adjustment</th>
