@@ -44,5 +44,7 @@ A rholiday.
 \code{hldy_new_years_day()} is a holiday for New Year's Day, January 1st.
 }
 \examples{
+library(almanac)
+
 alma_search("1990-01-01", "1995-01-01", hldy_new_years_day())
 }

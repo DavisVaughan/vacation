@@ -45,5 +45,7 @@ A rholiday.
 Jr. Day, the third Monday in January.
 }
 \examples{
+library(almanac)
+
 alma_search("1990-01-01", "1995-01-01", hldy_martin_luther_king_jr_day())
 }

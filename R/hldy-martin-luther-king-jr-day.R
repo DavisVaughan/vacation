@@ -10,6 +10,8 @@
 #'
 #' @export
 #' @examples
+#' library(almanac)
+#'
 #' alma_search("1990-01-01", "1995-01-01", hldy_martin_luther_king_jr_day())
 hldy_martin_luther_king_jr_day <- function(since = "1900-01-01",
                                            until = "2100-01-01",

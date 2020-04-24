@@ -44,6 +44,8 @@ A rholiday.
 \code{hldy_christmas()} is a holiday for Christmas, December 25th.
 }
 \examples{
+library(almanac)
+
 alma_search("1990-01-01", "1995-01-01", hldy_christmas())
 
 # Adjust weekend Christmas to nearest weekday
