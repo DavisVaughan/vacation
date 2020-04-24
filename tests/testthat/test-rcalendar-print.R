@@ -10,7 +10,7 @@ test_that("print method for rcalendar is informative", {
 
     "# can add rschedules / rdates / exdates"
     add_rschedule(rcalendar(), weekly())
-    add_rdate(rcalendar(), "2019-01-01")
-    add_exdate(rcalendar(), "2019-01-01")
+    add_rdates(rcalendar(), "2019-01-01")
+    add_exdates(rcalendar(), "2019-01-01")
   })
 })

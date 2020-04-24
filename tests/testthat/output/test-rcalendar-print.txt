@@ -29,9 +29,9 @@ can add rschedules / rdates / exdates
 > add_rschedule(rcalendar(), weekly())
 <rcalendar[1900-01-01 / 2100-01-01 / 1 rschedules / 0 rdates / 0 exdates]>
 
-> add_rdate(rcalendar(), "2019-01-01")
+> add_rdates(rcalendar(), "2019-01-01")
 <rcalendar[1900-01-01 / 2100-01-01 / 0 rschedules / 1 rdates / 0 exdates]>
 
-> add_exdate(rcalendar(), "2019-01-01")
+> add_exdates(rcalendar(), "2019-01-01")
 <rcalendar[1900-01-01 / 2100-01-01 / 0 rschedules / 0 rdates / 1 exdates]>
 
