@@ -25,12 +25,12 @@
 #'
 #' @param adjust_on `[NULL / rschedule]`
 #'
-#'   If `NULL`, no adjustment is made to the holiday.
+#'   If `NULL`, no adjustment is made.
 #'
-#'   Otherwise, an rschedule that defines when an adjustment to the holiday
-#'   should be made. For example, set to an rschedule for "on weekends", and
-#'   supply an `adjustment` of `adj_nearest()` to roll the holiday to the
-#'   nearest weekday.
+#'   Otherwise, an rschedule that defines when an adjustment should be made.
+#'   For example, set to an rschedule for "on weekends", and
+#'   supply an `adjustment` of `adj_nearest()` to roll holidays that fall
+#'   on a weekend to the nearest weekday.
 #'
 #' @param adjustment `[NULL / function]`
 #'

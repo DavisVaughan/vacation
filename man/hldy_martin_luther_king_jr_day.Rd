@@ -22,12 +22,12 @@ The upper bound on where to end looking for the holiday.}
 
 \item{adjust_on}{\verb{[NULL / rschedule]}
 
-If \code{NULL}, no adjustment is made to the holiday.
+If \code{NULL}, no adjustment is made.
 
-Otherwise, an rschedule that defines when an adjustment to the holiday
-should be made. For example, set to an rschedule for "on weekends", and
-supply an \code{adjustment} of \code{adj_nearest()} to roll the holiday to the
-nearest weekday.}
+Otherwise, an rschedule that defines when an adjustment should be made.
+For example, set to an rschedule for "on weekends", and
+supply an \code{adjustment} of \code{adj_nearest()} to roll holidays that fall
+on a weekend to the nearest weekday.}
 
 \item{adjustment}{\verb{[NULL / function]}
 
