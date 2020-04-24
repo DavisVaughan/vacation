@@ -1,3 +1,38 @@
+#' Construct an empty rcalendar
+#'
+#' @description
+#' `rcalendar()` is the starting point for constructing a new custom calendar.
+#' Holidays can be added to it with [add_rholiday()].
+#'
+#' By default, `since`, `until`, `adjust_on`, and `adjustment` all propagate
+#' to holidays added with [add_rholiday()].
+#'
+#' @inheritParams new_rholiday
+#'
+#' @param name `[NULL / character(1)]`
+#'
+#'   An optional name for the calendar.
+#'
+#' @param since `[Date(1)]`
+#'
+#'   A start date for the rcalendar.
+#'
+#' @param until `[Date(1)]`
+#'
+#'   An end date for the rcalendar.
+#'
+#' @return
+#' An empty rcalendar.
+#'
+#' @export
+#' @examples
+#' library(almanac)
+#'
+#' cal <- rcalendar() %>%
+#'   add_rholiday(hldy_christmas) %>%
+#'   add_rholiday(hldy_new_years_day)
+#'
+#' alma_search("2019-01-01", "2019-12-31", cal)
 rcalendar <- function(name = NULL,
                       since = "1900-01-01",
                       until = "2100-01-01",
