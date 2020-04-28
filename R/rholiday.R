@@ -86,14 +86,13 @@ new_rholiday <- function(name,
   rschedule <- generator(since, until)
   rschedule <- rholiday_adjust(rschedule, adjust_on, adjustment)
 
-  data <- list(
+  new_rschedule(
     name = name,
     since = since,
     until = until,
-    rschedule = rschedule
+    rschedule = rschedule,
+    class = "rholiday"
   )
-
-  new_rschedule(data, "rholiday")
 }
 
 # ------------------------------------------------------------------------------

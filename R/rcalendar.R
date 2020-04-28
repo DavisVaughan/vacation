@@ -215,7 +215,7 @@ new_rcalendar <- function(name,
     abort("`rholidays` must be a list of rholidays.")
   }
 
-  new_rbundle(
+  new_runion(
     rschedules = rschedules,
     rdates = rdates,
     exdates = exdates,
